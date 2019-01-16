@@ -1,0 +1,36 @@
+- name: Ansible Playbook example
+  hosts: webservers
+  become_user: root
+  become: yes
+  vars:
+    document_root: /var/www/html
+    web_user: www-data
+    index_file: src/index.php
+  tasks:
+    # Show information about facts
+    - name: Get OS Distribution
+      debug: var=ansible_distribution
+    # Run first task
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      changed_when: false
+    # Install packages
+    - name: Install Apache2 by apt
+      apt:
+        name:
+          - apache2
+          - php
+    # Restart services
+    - name: Restart service apache2, in all cases
+      service:
+        name: apache2
+        state: restarted
+    # Copy file
+    - name: Copy index.php to www folder
+      copy:
+        src: "{{ index_file }}"
+        dest: "{{ document_root }}"
+        owner: "{{ web_user }}"
+        group: "{{ web_user }}"
+        mode: 0644
+
