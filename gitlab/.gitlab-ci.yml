@@ -1,0 +1,41 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build-image:
+  image: docker:latest
+  services:
+    - docker:dind
+
+  stage: build
+  script:
+    - docker build -t debian-ansible .
+    # Send to Registry...
+  only:
+    refs:
+      - master
+
+provisioning:
+  stage: build
+  image: debian-ansible
+  script:
+    - pip install requests google-auth
+    - ansible-playbook deploy_gcp_instance.yml
+
+test:
+  image: debian-ansible
+  stage: test
+  script:
+    - git clone https://github.com/mrako/python-example-project.git
+    - cd python-example-project
+    - pip install -r test/requirements.txt
+    - python project/tests
+
+deploy:
+  image: debian-ansible
+  stage: deploy
+  script:
+    - git clone https://github.com/mrako/python-example-project.git
+    - cd python-example-project
+    - python project

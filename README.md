@@ -70,3 +70,19 @@ Try with:
 ```
 docker-ansible --version
 ```
+
+## GitLab
+
+Create a new repository on Gitlab.com or self-hosted GitLab
+
+Push all files stored in `gitlab/` folder (only) on the GitLab repository
+
+Add `service.json` with your Google Cloud service account credentials. 
+
+**INSECURE - IT'ONLY FOR TESTING PURPOSE, USE ONLY IN A PRIVATE REPOSITORY**
+
+https://cloud.google.com/iam/docs/creating-managing-service-accounts
+
+**TODO:**
+
+- Replace `service.json` with Jinja2 template and env variables
