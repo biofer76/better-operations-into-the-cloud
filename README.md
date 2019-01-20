@@ -6,6 +6,9 @@ Source code of my talk related to DevOps tools:
 * Docker
 * GitLab
 
+Watch talk slides on SlideShare:
+
+https://www.slideshare.net/FabioFerrari31/better-operations-into-the-cloud
 
 ## Before to start
 
